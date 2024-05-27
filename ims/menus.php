@@ -5,16 +5,6 @@ body {
     height: 100%;
 }
 
-.footer {
-   
-    color: white;
-    width: 100%;
-    text-align: center;
-    padding: 0x;
-    position: relative;
-    bottom: 0;
-}
-
 .navbar-menu {
     display: flex;
     justify-content: center;
@@ -30,9 +20,9 @@ body {
 
 
 
-<nav class="navbar navbar-dark bg-dark bg-gradient navbar-expand-md" style="height: 100%" >
+<nav class="nav-container navbar-dark bg-white bg-dark navbar-expand-md" style="height: 100%" >
 
-    <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
+    <div class="menu-container">
         <button class="navbar-toggler align-self-start" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

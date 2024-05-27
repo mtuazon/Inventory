@@ -64,7 +64,7 @@ body {
 </style>
 
 <div class="container">
-    <h1 class="text-center my-4 py-3 text-light" id="title">Inventory Management System - PHP</h1>
+    <h1 class="text-center my-4 py-3 text-light" id="title">Inventory System </h1>
 
     <div class="col-lg-4 col-md-10 col-sm-10 col-xs-12">
         <div class="card rounded-0 shadow">
