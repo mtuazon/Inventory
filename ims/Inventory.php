@@ -46,6 +46,7 @@ class Inventory {
 		$numRows = mysqli_num_rows($result);
 		return $numRows;
 	}
+
 	public function login($email, $password){
 		$password = md5($password);
 		$sqlQuery = "
@@ -60,30 +61,30 @@ class Inventory {
 		}
 	}
 	
-	public function register($email, $password, $name) {
-			// Check if email already exists
-			$stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
-			$stmt->bind_param("s", $email);
-			$stmt->execute();
-			$result = $stmt->get_result();
-			$stmt->close();
 	
-			if ($result->num_rows > 0) {
-				return "Email already exists";
+	public function register($email, $password, $name) {
+		// Check if email already exists
+		$password = md5($password);
+		$sqlQuery = "SELECT userid FROM ".$this->userTable." WHERE email='".$email."'";
+		$result = mysqli_query($this->dbConnect, $sqlQuery);
+	
+		if (mysqli_num_rows($result) > 0) {
+			// Email already exists, return an error message
+			return "Email already exists";
+		} else {
+			// Email doesn't exist, insert the new user's information
+			$sqlInsert = "INSERT INTO ".$this->userTable." (email, password, name) VALUES ('$email', '$password', '$name')";
+			$insertResult = mysqli_query($this->dbConnect, $sqlInsert);
+	
+			if ($insertResult) {
+				// Registration successful
+				return true;
 			} else {
-				// Insert new user into the database
-				$hash = password_hash($password, PASSWORD_DEFAULT);
-				$stmt = $this->conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-				$stmt->bind_param("sss", $name, $email, $hash);
-				
-				if ($stmt->execute()) {
-					return true;
-				} else {
-					return "Registration failed. Please try again.";
-				}
+				// Error in registration process
+				return "Registration failed";
 			}
 		}
-	
+	}
 	public function getCustomer(){
 		$sqlQuery = "
 			SELECT * FROM ".$this->customerTable." 
