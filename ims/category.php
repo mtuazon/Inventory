@@ -12,9 +12,10 @@ $inventory->checkLogin();
 <link rel="stylesheet" href="css/dataTables.bootstrap.min.css" />
 <script src="js/category.js"></script>
 <script src="js/common.js"></script>
+
 <?php include('inc/container.php');?>
 	
-		
+	
 <div class="container-fluid">			
 	<div class="row">
 		<div class="col-lg-2">
@@ -50,6 +51,7 @@ $inventory->checkLogin();
             </div>
         </div>
     </div>
+
     <div id="categoryModal" class="modal fade">
     	<div class="modal-dialog modal-dialog-centered">
     			<div class="modal-content">
@@ -73,4 +75,5 @@ $inventory->checkLogin();
     	</div>
     </div>
 </div>	
-<?php include('inc/footer.php');?>
+<?php include('inc/footer.php'); ?>
+

@@ -36,6 +36,8 @@ body {
 
 #title {
     text-shadow: 2px 2px 5px #000;
+    padding: 20px;
+    
 }
 
 .container {
@@ -61,15 +63,16 @@ body {
     max-width: 400px;
 }
 
+
 </style>
 
 <div class="container">
-    <h1 class="text-center my-4 py-3 text-light" id="title">Inventory Management System - PHP</h1>
+    <h1 class="text-center my-4 py-1 text-light" id="title">Inventory Management System - PHP</h1>
 
     <div class="col-lg-4 col-md-10 col-sm-10 col-xs-12">
         <div class="card rounded-0 shadow">
             <div class="card-header">
-                <div class="card-title h3 text-center mb-0 fw-bold">Login</div>
+                <div class="card-title h3 text-center mb-0 fw-bold">Regsiter</div>
             </div>
             <div class="card-body">
                 <div class="container-fluid">
@@ -87,11 +90,16 @@ body {
                             <label for="password" class="control-label">Password</label>
                             <input type="password" class="form-control rounded-0" id="password" name="pwd" placeholder="Password" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="confirm-password" class="control-label"> Confirm Password</label>
+                            <input type="confirm-password" class="form-control rounded-0" id="confirm-password" name="confirm-password" placeholder=" Confim Password" required>
+                        </div>
+
                         <div class="d-grid">
-                            <button type="submit" name="login" class="btn btn-primary rounded-0">Login</button>
+                            <button type="submit" name="login" class="btn btn-primary rounded-0">Register</button>
                         </div>
                     </form>
-                    <p class="mt-3 text-center">Don't have an account? <a href="register.php">Register here</a></p>
+                    <p class="mt-3 text-center">Already have an account? <a href="login.php">Login here</a></p>
                 </div>
             </div>
         </div>

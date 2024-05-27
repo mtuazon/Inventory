@@ -11,6 +11,8 @@ $inventory->checkLogin();
 <link rel="stylesheet" href="css/dataTables.bootstrap.min.css" />
 <link rel="stylesheet" href="css/style.css" />
 <script src="js/common.js"></script>
+
+
 <?php include('inc/container.php');?>
 
 <div class="container-fluid">			
@@ -46,7 +48,11 @@ $inventory->checkLogin();
 	</div>
 		
 </div>	
-<?php include('inc/footer.php');?>
+
+<div class="footer">
+    <?php include('inc/footer.php'); ?>
+</div>
+
 
 
 

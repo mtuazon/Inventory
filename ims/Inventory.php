@@ -12,6 +12,8 @@ class Inventory {
 	private $supplierTable = 'ims_supplier';
 	private $purchaseTable = 'ims_purchase';
 	private $orderTable = 'ims_order';
+
+	private $conn = null; 
 	private $dbConnect = false;
     public function __construct(){
         if(!$this->dbConnect){ 
@@ -23,6 +25,8 @@ class Inventory {
             }
         }
     }
+
+	
 	private function getData($sqlQuery) {
 		$result = mysqli_query($this->dbConnect, $sqlQuery);
 		if(!$result){
@@ -55,6 +59,31 @@ class Inventory {
 			header("Location:login.php");
 		}
 	}
+	
+	public function register($email, $password, $name) {
+			// Check if email already exists
+			$stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+			$stmt->bind_param("s", $email);
+			$stmt->execute();
+			$result = $stmt->get_result();
+			$stmt->close();
+	
+			if ($result->num_rows > 0) {
+				return "Email already exists";
+			} else {
+				// Insert new user into the database
+				$hash = password_hash($password, PASSWORD_DEFAULT);
+				$stmt = $this->conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+				$stmt->bind_param("sss", $name, $email, $hash);
+				
+				if ($stmt->execute()) {
+					return true;
+				} else {
+					return "Registration failed. Please try again.";
+				}
+			}
+		}
+	
 	public function getCustomer(){
 		$sqlQuery = "
 			SELECT * FROM ".$this->customerTable." 
