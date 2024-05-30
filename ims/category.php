@@ -59,14 +59,16 @@ $inventory->checkLogin();
 						<h4 class="modal-title"><i class="fa fa-plus"></i> Add Category</h4>
     					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
     				</div>
-    				<div class="modal-body">
-    					<form method="post" id="categoryForm">
+						<div class="modal-body">
+						<form method="post" id="categoryForm">
 							<input type="hidden" name="categoryId" id="categoryId"/>
 							<input type="hidden" name="btn_action" id="btn_action"/>
 							<label>Category Name</label>
 							<input type="text" name="category" id="category" class="form-control rounded-0" required />
-    					</form>
-    				</div>
+							<div id="customFieldsContainer"></div> 
+							<button type="button" id="addCustomField" class="btn btn-secondary btn-sm mt-3">Add Custom Field</button>
+						</form>
+						</div>
     				<div class="modal-footer">
     					<input type="submit" name="action" id="action" class="btn btn-primary btn-sm rounded-0" value="Add" form="categoryForm"/>
     					<button type="button" class="btn btn-default btn-sm rounded-0 border" data-bs-dismiss="modal">Close</button>
@@ -75,5 +77,4 @@ $inventory->checkLogin();
     	</div>
     </div>
 </div>	
-<?php include('inc/footer.php'); ?>
 

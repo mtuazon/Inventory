@@ -112,6 +112,4 @@ body {
     </div>
 </div>
 
-<div class="footer">
-    <?php include('inc/footer.php'); ?>
-</div>
+

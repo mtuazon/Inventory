@@ -4,7 +4,9 @@ $(document).ready(function() {
         $('.modal-title').html("<i class='fa fa-plus'></i> Add Category");
         $('#action').val('Add');
         $('#btn_action').val('categoryAdd');
+        $('#customFieldsContainer').html('');
     });
+
     var categoryData = $('#categoryList').DataTable({
         "lengthChange": false,
         "processing": true,
@@ -17,15 +19,25 @@ $(document).ready(function() {
             dataType: "json"
         },
         "columnDefs": [{
-            "targets": [0, 3],
+            "targets": [0, 2],
             "orderable": false,
         }, ],
         "pageLength": 25,
         'rowCallback': function(row, data, index) {
             $(row).find('td').addClass('align-middle')
-            $(row).find('td:eq(0), td:eq(3)').addClass('text-center')
+            $(row).find('td:eq(0), td:eq(2)').addClass('text-center')
         }
     });
+
+    $('#addCustomField').click(function() {
+        $('#customFieldsContainer').append(getCustomFieldHtml());
+    });
+
+    // Remove custom field
+    $(document).on('click', '.removeCustomField', function() {
+        $(this).closest('.customField').remove();
+    });
+    
     $(document).on('submit', '#categoryForm', function(event) {
         event.preventDefault();
         $('#action').attr('disabled', 'disabled');
@@ -79,4 +91,40 @@ $(document).ready(function() {
             return false;
         }
     });
+
+    function getCustomFieldHtml() {
+        return `
+            <div class="customField mb-3">
+                <label>Field Name</label>
+                <input type="text" name="customFieldName[]" class="form-control rounded-0" required />
+                <label>Field Type</label>
+                <select name="customFieldType[]" class="form-select rounded-0" required>
+                    <option value="text">Text</option>
+                    <option value="number">Number</option>
+                    <option value="date">Date</option>
+                </select>
+                <label>Field Value</label>
+                <input type="text" name="customFieldValue[]" class="form-control rounded-0" required />
+                <button type="button" class="btn btn-danger btn-sm removeCustomField mt-2">Remove Field</button>
+            </div>
+        `;
+    }
+
+    function getCustomFieldHtml(fieldName = '', fieldType = 'text', fieldValue = '') {
+        return `
+            <div class="customField mb-3">
+                <label>Field Name</label>
+                <input type="text" name="customFieldName[]" class="form-control rounded-0" value="${fieldName}" required />
+                <label>Field Type</label>
+                <select name="customFieldType[]" class="form-select rounded-0" required>
+                    <option value="text" ${fieldType === 'text' ? 'selected' : ''}>Text</option>
+                    <option value="number" ${fieldType === 'number' ? 'selected' : ''}>Number</option>
+                    <option value="date" ${fieldType === 'date' ? 'selected' : ''}>Date</option>
+                </select>
+                <label>Field Value</label>
+                <input type="text" name="customFieldValue[]" class="form-control rounded-0" value="${fieldValue}" required />
+                <button type="button" class="btn btn-danger btn-sm removeCustomField mt-2">Remove Field</button>
+            </div>
+        `;
+    }
 });
