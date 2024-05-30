@@ -12,7 +12,7 @@ $(document).ready(function() {
             url: "action.php",
             type: "POST",
             data: { action: 'getInventoryDetails' },
-            dataType: "json"
+            dataType: "json",
         },
         'rowCallback': function(row, data, index) {
             $(row).find('td').addClass('align-middle text-end')

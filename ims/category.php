@@ -65,6 +65,8 @@ $inventory->checkLogin();
 							<input type="hidden" name="btn_action" id="btn_action"/>
 							<label>Category Name</label>
 							<input type="text" name="category" id="category" class="form-control rounded-0" required />
+
+							
 							<div id="customFieldsContainer"></div> 
 							<button type="button" id="addCustomField" class="btn btn-secondary btn-sm mt-3">Add Custom Field</button>
 						</form>

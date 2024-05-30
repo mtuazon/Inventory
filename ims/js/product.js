@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    const categoryUnits = {
+        'Medicine': ['Grams', 'Box', 'Tablets', 'Pieces'],
+        'Beverages': ['Ml', 'Liters', 'Packets', 'Bottles'],
+        'Electronics': ['Pieces', 'Box', 'Units'],
+        'Food': ['Meal', 'Pieces', 'King-size', 'Pounds', 'Slices'],
+    };
 
     $('#addProduct').click(function() {
         $('#productModal').modal('show');
@@ -6,8 +12,8 @@ $(document).ready(function() {
         $('.modal-title').html("<i class='fa fa-plus'></i> Add Product");
         $('#action').val("Add");
         $('#btn_action').val("addProduct");
+        $('#unit').empty().append('<option value="">Select Unit</option>');  // Reset the units dropdown
     });
-
 
     var productData = $('#productList').DataTable({
         "lengthChange": false,
@@ -23,7 +29,7 @@ $(document).ready(function() {
         "columnDefs": [{
             "targets": [0, 7],
             "orderable": false,
-        }, ],
+        }],
         "pageLength": 9,
         'rowCallback': function(row, data, index) {
             $(row).find('td').addClass('align-middle')
@@ -31,7 +37,6 @@ $(document).ready(function() {
         },
     });
 
-    
     $(document).on('change', '#categoryid', function() {
         var categoryid = $('#categoryid').val();
         var btn_action = 'getCategoryBrand';
@@ -42,6 +47,20 @@ $(document).ready(function() {
             success: function(data) {
                 $('#brandid').html(data);
             }
+        });
+
+        // Update the units dropdown based on the selected category
+        let selectedCategory = $(this).find("option:selected").text();
+        let units = categoryUnits[selectedCategory] || [];
+        let unitDropdown = $('#unit');
+
+        // Clear existing options
+        unitDropdown.empty();
+        unitDropdown.append('<option value="">Select Unit</option>');  // Add default option
+
+        // Populate units based on the selected category
+        units.forEach(function(unit) {
+            unitDropdown.append('<option value="' + unit + '">' + unit + '</option>');
         });
     });
 
@@ -98,8 +117,19 @@ $(document).ready(function() {
                 $('#tax').val(data.tax);
                 $('.modal-title').html("<i class='fa fa-edit'></i> Edit Product");
                 $('#pid').val(pid);
-                $('#action').val("Edit");
+                $('#action').val("Edit");            
                 $('#btn_action').val("updateProduct");
+
+                // Populate the units dropdown based on the selected category for editing
+                let selectedCategory = $('#categoryid option:selected').text();
+                let units = categoryUnits[selectedCategory] || [];
+                let unitDropdown = $('#unit');
+                unitDropdown.empty();
+                unitDropdown.append('<option value="">Select Unit</option>');  // Add default option
+                units.forEach(function(unit) {
+                    unitDropdown.append('<option value="' + unit + '">' + unit + '</option>');
+                });
+                $('#unit').val(data.unit);  // Set the correct unit
             }
         })
     });
@@ -123,3 +153,4 @@ $(document).ready(function() {
         }
     });
 });
+

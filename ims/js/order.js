@@ -1,3 +1,5 @@
+
+
 $(document).ready(function() {
     var orderData = $('#orderList').DataTable({
         "lengthChange": false,
@@ -7,9 +9,10 @@ $(document).ready(function() {
         "ajax": {
             url: "action.php",
             type: "POST",
-            data: { action: 'listOrder' },
+            data: { action: 'listOrders' },
             dataType: "json"
         },
+        
         "pageLength": 10,
         "columnDefs": [{
             "target": [0, 4],
@@ -33,18 +36,19 @@ $(document).ready(function() {
     $(document).on('submit', '#orderForm', function(event) {
         event.preventDefault();
         $('#action').attr('disabled', 'disabled');
-        var formData = $(this).serialize();
+        var formData = $(this).serialize(); 
+        console.log(formData); 
         $.ajax({
             url: "action.php",
             method: "POST",
-            data: formData,
+            data: formData, 
             success: function(data) {
                 $('#orderForm')[0].reset();
                 $('#orderModal').modal('hide');
                 $('#action').attr('disabled', false);
                 orderData.ajax.reload();
             }
-        })
+        });
     });
 
     $(document).on('click', '.view', function() {
@@ -73,7 +77,7 @@ $(document).ready(function() {
                 $('#orderModal').modal('show');
                 $('#product').val(data.product_id);
                 $('#shipped').val(data.total_shipped);
-                $('#customer').val(data.customer_id);
+                $('#date').val(data.date).datepicker(); ;
                 $('.modal-title').html("<i class='fa fa-edit'></i> Edit Order");
                 $('#order_id').val(order_id);
                 $('#action').val("Edit");

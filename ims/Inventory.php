@@ -393,6 +393,18 @@ class Inventory {
 		}
 		return $dropdownHTML;
 	}
+
+	public function supplierDropdownList(){	
+		
+		$sqlQuery = "SELECT * FROM ".$this->supplierTable." 
+			WHERE status = 'active'	ORDER BY supplier_name ASC";
+		$result = mysqli_query($this->dbConnect, $sqlQuery);
+		$dropdownHTML = '';
+		while( $supplier = mysqli_fetch_assoc($result) ) {	
+			$dropdownHTML .= '<option value="'.$supplier["supplier_id"].'">'.$supplier["supplier_name"].'</option>';
+		}
+		return $dropdownHTML;
+	}
 	
 	public function addProduct() {		
 		$sqlInsert = "
@@ -645,9 +657,9 @@ class Inventory {
 		mysqli_query($this->dbConnect, $sqlQuery);		
 	}
 	// order
+
 	public function listOrders(){		
 		$sqlQuery = "SELECT * FROM ".$this->orderTable." as o
-			INNER JOIN ".$this->customerTable." as c ON c.id = o.customer_id
 			INNER JOIN ".$this->productTable." as p ON p.pid = o.product_id ";		
 		if(isset($_POST['order'])) {
 			$sqlQuery .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
@@ -665,7 +677,7 @@ class Inventory {
 			$orderRow[] = $order['order_id'];
 			$orderRow[] = $order['pname'];
 			$orderRow[] = $order['total_shipped'];	
-			$orderRow[] = $order['name'];			
+			$orderRow[] = $order['date'];			
 			$orderRow[] = '<div class="btn-group btn-group-sm"><button type="button" name="update" id="'.$order["order_id"].'" class="btn btn-primary btn-sm rounded-0  update" title="Update"><i class="fa fa-edit"></i></button><button type="button" name="delete" id="'.$order["order_id"].'" class="btn btn-danger btn-sm rounded-0  delete" title="Delete"><i class="fa fa-trash"></i></button></button';
 			$orderData[] = $orderRow;
 						
@@ -680,8 +692,8 @@ class Inventory {
 	}
 	public function addOrder() {		
 		$sqlInsert = "
-			INSERT INTO ".$this->orderTable."(product_id, total_shipped, customer_id) 
-			VALUES ('".$_POST['product']."', '".$_POST['shipped']."', '".$_POST['customer']."')";		
+			INSERT INTO ".$this->orderTable."(product_id, total_shipped, date) 
+			VALUES ('".$_POST['product']."', '".$_POST['shipped']."', '".$_POST['date']."')";		
 		mysqli_query($this->dbConnect, $sqlInsert);
 		echo 'New order added';
 	}		
@@ -697,7 +709,7 @@ class Inventory {
 		if($_POST['order_id']) {	
 			$sqlUpdate = "
 				UPDATE ".$this->orderTable." 
-				SET product_id = '".$_POST['product']."', total_shipped='".$_POST['shipped']."', customer_id='".$_POST['customer']."' WHERE order_id = '".$_POST['order_id']."'";		
+				SET product_id = '".$_POST['product']."', total_shipped='".$_POST['shipped']."', date='".$_POST['date']."' WHERE order_id = '".$_POST['order_id']."'";		
 			mysqli_query($this->dbConnect, $sqlUpdate);	
 			echo 'Order Edited';
 		}	
@@ -708,6 +720,8 @@ class Inventory {
 			WHERE order_id = '".$_POST['order_id']."'";		
 		mysqli_query($this->dbConnect, $sqlQuery);		
 	}
+
+	
 	public function customerDropdownList(){	
 		$sqlQuery = "SELECT * FROM ".$this->customerTable." ORDER BY name ASC";
 		$result = mysqli_query($this->dbConnect, $sqlQuery);
