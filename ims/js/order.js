@@ -9,7 +9,7 @@ $(document).ready(function() {
         "ajax": {
             url: "action.php",
             type: "POST",
-            data: { action: 'listOrders' },
+            data: { action: 'listOrder' },
             dataType: "json"
         },
         
@@ -77,7 +77,7 @@ $(document).ready(function() {
                 $('#orderModal').modal('show');
                 $('#product').val(data.product_id);
                 $('#shipped').val(data.total_shipped);
-                $('#date').val(data.date).datepicker(); ;
+                $('#date').val(data.date).datepicker('update', data.date)
                 $('.modal-title').html("<i class='fa fa-edit'></i> Edit Order");
                 $('#order_id').val(order_id);
                 $('#action').val("Edit");

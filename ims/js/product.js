@@ -3,7 +3,7 @@ $(document).ready(function() {
         'Medicine': ['Grams', 'Box', 'Tablets', 'Pieces'],
         'Beverages': ['Ml', 'Liters', 'Packets', 'Bottles'],
         'Electronics': ['Pieces', 'Box', 'Units'],
-        'Food': ['Meal', 'Pieces', 'King-size', 'Pounds', 'Slices'],
+        'Food': ['Small-size', 'Medium-size', 'Large-size', 'Pieces', 'Slices'],
     };
 
     $('#addProduct').click(function() {
@@ -13,6 +13,7 @@ $(document).ready(function() {
         $('#action').val("Add");
         $('#btn_action').val("addProduct");
         $('#unit').empty().append('<option value="">Select Unit</option>');  // Reset the units dropdown
+        $('#unit').prop('disabled', false);  // Enable unit dropdown
     });
 
     var productData = $('#productList').DataTable({
@@ -58,11 +59,17 @@ $(document).ready(function() {
         unitDropdown.empty();
         unitDropdown.append('<option value="">Select Unit</option>');  // Add default option
 
-        // Populate units based on the selected category
-        units.forEach(function(unit) {
-            unitDropdown.append('<option value="' + unit + '">' + unit + '</option>');
-        });
-    });
+        if (units.length === 0) {
+            // If no units available for the selected category, disable the dropdown
+            unitDropdown.prop('disabled', true);
+        } else {
+            // Populate units based on the selected category
+            unitDropdown.prop('disabled', false);
+            units.forEach(function(unit) {
+                unitDropdown.append('<option value="' + unit + '">' + unit + '</option>');
+            });
+        }
+     });
 
     $(document).on('submit', '#productForm', function(event) {
         event.preventDefault();
@@ -112,12 +119,11 @@ $(document).ready(function() {
                 $('#pmodel').val(data.model);
                 $('#description').val(data.description);
                 $('#quantity').val(data.quantity);
-                $('#unit').val(data.unit);
                 $('#base_price').val(data.base_price);
                 $('#tax').val(data.tax);
                 $('.modal-title').html("<i class='fa fa-edit'></i> Edit Product");
                 $('#pid').val(pid);
-                $('#action').val("Edit");            
+                $('#action').val("Edit");
                 $('#btn_action').val("updateProduct");
 
                 // Populate the units dropdown based on the selected category for editing
@@ -126,10 +132,16 @@ $(document).ready(function() {
                 let unitDropdown = $('#unit');
                 unitDropdown.empty();
                 unitDropdown.append('<option value="">Select Unit</option>');  // Add default option
-                units.forEach(function(unit) {
-                    unitDropdown.append('<option value="' + unit + '">' + unit + '</option>');
-                });
-                $('#unit').val(data.unit);  // Set the correct unit
+
+                if (units.length === 0) {
+                    unitDropdown.prop('disabled', true);
+                } else {
+                    unitDropdown.prop('disabled', false);
+                    units.forEach(function(unit) {
+                        unitDropdown.append('<option value="' + unit + '">' + unit + '</option>');
+                    });
+                    $('#unit').val(data.unit);  // Set the correct unit
+                }
             }
         })
     });
@@ -153,4 +165,3 @@ $(document).ready(function() {
         }
     });
 });
-

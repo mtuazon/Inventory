@@ -658,38 +658,39 @@ class Inventory {
 	}
 	// order
 
-	public function listOrders(){		
+	public function listOrders() {
 		$sqlQuery = "SELECT * FROM ".$this->orderTable." as o
-			INNER JOIN ".$this->productTable." as p ON p.pid = o.product_id ";		
-		if(isset($_POST['order'])) {
+			INNER JOIN ".$this->productTable." as p ON p.pid = o.product_id ";
+		if (isset($_POST['order'])) {
 			$sqlQuery .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
 		} else {
 			$sqlQuery .= 'ORDER BY o.order_id DESC ';
 		}
-		if($_POST['length'] != -1) {
+		if ($_POST['length'] != -1) {
 			$sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-		}		
+		}
 		$result = mysqli_query($this->dbConnect, $sqlQuery);
 		$numRows = mysqli_num_rows($result);
-		$orderData = array();	
-		while( $order = mysqli_fetch_assoc($result) ) {			
+		$orderData = array();
+		while ($order = mysqli_fetch_assoc($result)) {
 			$orderRow = array();
 			$orderRow[] = $order['order_id'];
 			$orderRow[] = $order['pname'];
-			$orderRow[] = $order['total_shipped'];	
-			$orderRow[] = $order['date'];			
-			$orderRow[] = '<div class="btn-group btn-group-sm"><button type="button" name="update" id="'.$order["order_id"].'" class="btn btn-primary btn-sm rounded-0  update" title="Update"><i class="fa fa-edit"></i></button><button type="button" name="delete" id="'.$order["order_id"].'" class="btn btn-danger btn-sm rounded-0  delete" title="Delete"><i class="fa fa-trash"></i></button></button';
+			$orderRow[] = $order['total_shipped'];
+			$orderRow[] = $order['date'];
+			$orderRow[] = '<div class="btn-group btn-group-sm"><button type="button" name="update" id="'.$order["order_id"].'" class="btn btn-primary btn-sm rounded-0 update" title="Update"><i class="fa fa-edit"></i></button><button type="button" name="delete" id="'.$order["order_id"].'" class="btn btn-danger btn-sm rounded-0 delete" title="Delete"><i class="fa fa-trash"></i></button></div>';
 			$orderData[] = $orderRow;
-						
 		}
 		$output = array(
-			"draw"				=>	intval($_POST["draw"]),
-			"recordsTotal"  	=>  $numRows,
-			"recordsFiltered" 	=> 	$numRows,
-			"data"    			=> 	$orderData
+			"draw" => intval($_POST["draw"]),
+			"recordsTotal" => $numRows,
+			"recordsFiltered" => $numRows,
+			"data" => $orderData
 		);
-		echo json_encode($output);		
+		echo json_encode($output);
+		exit();  // Ensure no further output
 	}
+	
 	public function addOrder() {		
 		$sqlInsert = "
 			INSERT INTO ".$this->orderTable."(product_id, total_shipped, date) 
@@ -721,7 +722,7 @@ class Inventory {
 		mysqli_query($this->dbConnect, $sqlQuery);		
 	}
 
-	
+
 	public function customerDropdownList(){	
 		$sqlQuery = "SELECT * FROM ".$this->customerTable." ORDER BY name ASC";
 		$result = mysqli_query($this->dbConnect, $sqlQuery);

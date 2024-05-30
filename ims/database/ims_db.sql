@@ -92,7 +92,7 @@ CREATE TABLE `ims_order` (
   `order_id` int(11) NOT NULL,
   `product_id` varchar(255) NOT NULL,
   `total_shipped` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `date` int(11) NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -100,9 +100,9 @@ CREATE TABLE `ims_order` (
 -- Dumping data for table `ims_order`
 --
 
-INSERT INTO `ims_order` (`order_id`, `product_id`, `total_shipped`, `customer_id`, `order_date`) VALUES
-(1, '1', 5, 1, '2022-06-20 08:20:40'),
-(2, '2', 3, 2, '2022-06-20 08:20:48');
+INSERT INTO `ims_order` (`order_id`, `product_id`, `total_shipped`, `date`, `order_date`) VALUES
+(1, '1', 5, 2022-06-20, '2022-06-20 08:20:40'),
+(2, '2', 3, 2022-06-20, '2022-06-20 08:20:48');
 
 -- --------------------------------------------------------
 

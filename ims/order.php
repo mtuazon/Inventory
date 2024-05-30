@@ -13,6 +13,8 @@ $inventory->checkLogin();
 <script src="js/order.js"></script>
 <script src="js/common.js"></script>
 <?php include('inc/container.php');?>
+
+
 <div class="container-fluid">			
 	<div class="row">
 		<div class="col-lg-2">
@@ -74,7 +76,7 @@ $inventory->checkLogin();
                                 </div> 
 
                                 <div class="mb-3">
-                                    <label>Date </label>
+                                    <label class="control-label"> Date </label>
                                     <input type="text" name="date" id="date" class="form-control rounded-0" required />
                                 </div>
 

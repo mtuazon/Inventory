@@ -114,7 +114,7 @@ if(!empty($_POST['btn_action']) && $_POST['btn_action'] == 'deletePurchase'){
 }
 // manage purchase
 if(!empty($_POST['action']) && $_POST['action'] == 'listOrder') {
-	$inventory->listOrders();
+	echo json_encode($inventory->listOrders());
 }
 if(!empty($_POST['btn_action']) && $_POST['btn_action'] == 'addOrder'){
 	$inventory->addOrder();
