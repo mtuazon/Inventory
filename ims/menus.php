@@ -9,6 +9,7 @@ body {
     display: flex;
     justify-content: center;
     width: 100%;
+    background-color: #f2f2f2; /* Gray background color */
 }
 
 .navbar-menu .nav-item {
