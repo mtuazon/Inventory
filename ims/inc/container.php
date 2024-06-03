@@ -1,7 +1,7 @@
-<nav role="navigation" class="navbar navbar-dark navbar-static-top bg-primary bg-gradient">
-    <div class="container">
+<nav role="navigation" class="navbar navbar-dark navbar-static-top" style="background-color: orange;">
+    <div class="container d-flex justify-content-between align-items-center">
         <div class="navbar-header">
-            <a class="navbar-brand">Inventory System</a>
+            <a class="navbar-brand" style="font-size: 24px;"><b>INVENTORY SYSTEM</b></a>
         </div>
         <ul class="nav navbar-nav">
             <li class="dropdown position-relative">
